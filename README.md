@@ -13,3 +13,11 @@
 
 1. stack 사용 Postfix Caculator가 아닌 BST 형태로 구현
 2. 중간 과정 산출물들도 print되도록
+
+- 난이도 1 : BST-calc-1.py
+
+1. single-digit integers, binary operator : '+', '-', 'x', '/'
+2. operand와 operator 사이에 space가 있다.
+3. 연산자 우선 순위는 신경쓰지 않는다.
+4. Example : 2 + 4 x 5
+   (현재 나누기로 인한 실수는 계산이 안됨)
