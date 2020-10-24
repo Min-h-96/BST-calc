@@ -4,11 +4,24 @@ import sys
 def postfix(list):
     operands = []
     operator = []
-    for i in list:
-        if ord(i) >= 48:
-            operands.append(i)
-        else:
-            operator.append(i)
+    # 숫자와 연산자를 각각 구분을 한다
+    for i in range(len(list)):
+        if ord(list[i]) >= 48:  # 숫자인 경우
+            operands.append(list[i])
+            # 이전에 연산자가 * 또는 / 였던 경우
+            if list[i-1] == '*' or list[i-1] == '/':
+                operands[len(operands)-1], operands[len(operands)-2] = operands[len(operands)-2], operands[len(operands)-1]
+
+        else:  # 연산자인 경우, 연산자 우선 순위 *,/ > +,-
+            operator.append(list[i])
+            if list[i] == '*' or list[i] == '/':
+                # +, - 다음으로 *, / 가 들어온 경우
+                if list[i-2] == '+' or list[i-2] == '-':
+                    operator[len(operator)-1], operator[len(operator)-2] = operator[len(operator)-2], operator[len(operator)-1]
+                    operands[len(operands)-1], operands[len(operands)-2] = operands[len(operands)-2], operands[len(operands)-1]
+                # *, / 다음으로 *, / 가 들어온 경우
+                else:
+                    operator[len(operator)-1], operator[len(operator)-2] = operator[len(operator)-2], operator[len(operator)-1]
 
     lst_postfix = [operands[0]]
     for i in range(len(operator)):
@@ -60,22 +73,21 @@ class BinarySearchTree(object):
 
     def calculateNode(self, currentNode):
         # 루트 노드 값이 operand가 되면 그 값을 return
-        if ord(self.root.data[0]) >= 49:
+        if ord(self.root.data[0]) >= 48:
             return self.root.data
         # 왼쪽 자식 노드 값이 operand 이면 부모 노드의 operator로 계산
         if ord(currentNode.left.data[0]) >= 49:
             if currentNode.data == '+':
                 currentNode.data = str(
-                    int(currentNode.left.data) + int(currentNode.right.data))
+                    float(currentNode.left.data) + float(currentNode.right.data))
             elif currentNode.data == '-':
                 currentNode.data = str(
-                    int(currentNode.left.data) - int(currentNode.right.data))
+                    float(currentNode.left.data) - float(currentNode.right.data))
             elif currentNode.data == '*':
                 currentNode.data = str(
-                    int(currentNode.left.data) * int(currentNode.right.data))
+                    float(currentNode.left.data) * float(currentNode.right.data))
             elif currentNode.data == '/':
-                currentNode.data = str(int(
-                    int(currentNode.left.data) / int(currentNode.right.data)))
+                currentNode.data = str(round(float(currentNode.left.data) / float(currentNode.right.data), 1))
             return self.calculateNode(self.root)
         # 왼쪽 자식 노드 값이 operator이면 그 노드로 이동해서 함수 재귀 호출
         else:
