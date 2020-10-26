@@ -18,13 +18,14 @@ def postfix(list):
         operator = []
         lst_postfix = []
         for i in range(len(list)):
+            # 숫자인 경우
             if ord(list[i]) >= 48:
                 operands.append(list[i])
-                # if list[i-1] == '*' or list[i-1] == '/':
+            # 연산자인 경우
             else:
                 if operator and (list[i] == '+' or list[i] == '-'):
-                    count = operator.count('*') + operator.count('/')
-                    if count > 1:
+                    if len(operands) > len(operator):
+                        count = 2
                         while count > 0:
                             lst_postfix.append(operands[0])
                             del operands[0]
@@ -38,24 +39,24 @@ def postfix(list):
                             lst_postfix.append(operator[0])
                             del operator[0]
                     else:
+                        lst_postfix.append(operands[0])
+                        del operands[0]
                         while operands:
                             lst_postfix.append(operands[0])
                             del operands[0]
+                            lst_postfix.append(operator[0])
+                            del operator[0]
                         while operator:
                             lst_postfix.append(operator[0])
                             del operator[0]
                 
                 operator.append(list[i])
                 if list[i] == '*' or list[i] == '/':
-                # +, - 다음 *, / 인 경우
-                    if list[i-2] == '+' or list[i-2] == '-':
-                        operator[len(operator)-1], operator[len(operator)-2] = operator[len(operator)-2], operator[len(operator)-1]
-                # *, / 다음 *, / 인 경우
-                    else:
+                    if operator[len(operator)-2] == '+' or operator[len(operator)-2] == '-':
                         operator[len(operator)-1], operator[len(operator)-2] = operator[len(operator)-2], operator[len(operator)-1]
 
-    count = operator.count('*') + operator.count('/')
-    if count > 1:
+    if len(operands) > len(operator):
+        count = 2
         while count > 0:
             lst_postfix.append(operands[0])
             del operands[0]
@@ -69,9 +70,13 @@ def postfix(list):
             lst_postfix.append(operator[0])
             del operator[0]
     else:
+        lst_postfix.append(operands[0])
+        del operands[0]
         while operands:
             lst_postfix.append(operands[0])
             del operands[0]
+            lst_postfix.append(operator[0])
+            del operator[0]
         while operator:
             lst_postfix.append(operator[0])
             del operator[0]
@@ -151,19 +156,21 @@ class BinarySearchTree(object):
 
 if __name__ == "__main__":
     prob = list(map(str, sys.stdin.readline().split()))
-    
-    # prob1 = ['2', '+', '7', '*', '5', '-', '6'] # 2 7 5 * + 6 -
-    # prob2 = ['5', '+', '4', '-', '2', '*', '3', '+', '6'] # 5 4 + 2 3 * - 6 +
-    # prob3 = ['1', '-', '2', '*', '3', '/', '4', '+', '5'] # 1 2 3 * 4 / - 5 +
-    # print(postfix(prob1))
-    # print(postfix(prob2))
-    # print(postfix(prob3))
 
     postfix_form = postfix(prob)
+    print(postfix_form)
 
     bst = BinarySearchTree()
     for i in postfix_form:
         bst.insert(i)
     
-    print(postfix_form)
     print(bst.print())
+
+    # prob1 = ['2', '+', '7', '*', '5', '-', '6'] # 2 7 5 * + 6 -
+    # prob2 = ['5', '+', '4', '-', '2', '*', '3', '+', '6'] # 5 4 + 2 3 * - 6 +
+    # prob3 = ['1', '-', '2', '*', '3', '/', '4', '+', '5'] # 1 2 3 * 4 / - 5 +
+    # prob4 = ['1', '*', '2', '+', '3', '*', '2', '/', '4', '+', '5'] # 1 2 * 3 2 * 4 / + 5 +
+    # print(postfix(prob1))
+    # print(postfix(prob2))
+    # print(postfix(prob3))
+    # print(postfix(prob4))
