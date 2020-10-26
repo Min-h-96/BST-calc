@@ -6,27 +6,18 @@ def postfix(list):
     operator = []
     # 숫자와 연산자를 각각 구분을 한다
     for i in range(len(list)):
-        if ord(list[i]) >= 48:  # 숫자인 경우
-            operands.append(list[i])
-            # 이전에 연산자가 * 또는 / 였던 경우
-            if list[i-1] == '*' or list[i-1] == '/':
-                operands[len(operands)-1], operands[len(operands)-2] = operands[len(operands)-2], operands[len(operands)-1]
+        operands = []
+        operator = []
+        for i in list:
+            if ord(i) >= 48:
+                operands.append(i)
+            else:
+                operator.append(i)
 
-        else:  # 연산자인 경우, 연산자 우선 순위 *,/ > +,-
-            operator.append(list[i])
-            if list[i] == '*' or list[i] == '/':
-                # +, - 다음으로 *, / 가 들어온 경우
-                if list[i-2] == '+' or list[i-2] == '-':
-                    operator[len(operator)-1], operator[len(operator)-2] = operator[len(operator)-2], operator[len(operator)-1]
-                    operands[len(operands)-1], operands[len(operands)-2] = operands[len(operands)-2], operands[len(operands)-1]
-                # *, / 다음으로 *, / 가 들어온 경우
-                else:
-                    operator[len(operator)-1], operator[len(operator)-2] = operator[len(operator)-2], operator[len(operator)-1]
-
-    lst_postfix = [operands[0]]
-    for i in range(len(operator)):
-        lst_postfix.append(operands[i+1])
-        lst_postfix.append(operator[i])
+        lst_postfix = [operands[0]]
+        for i in range(len(operator)):
+            lst_postfix.append(operands[i+1])
+            lst_postfix.append(operator[i])
 
     return lst_postfix
 

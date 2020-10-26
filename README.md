@@ -18,6 +18,6 @@
 
 1. single-digit integers, binary operator : '+', '-', 'x', '/'
 2. operand와 operator 사이에 space가 있다.
-3. 연산자 우선 순위가 존재한다.
+3. 연산자 우선 순위가 존재하지 않는다.
 4. 소수 부분은 소수 둘 째 자리에서 반올림 한다.
-5. Example : 2 + 4 x 5 / 3 = 8.7
+5. Example : 2 + 4 x 5 / 4 = 7.5
