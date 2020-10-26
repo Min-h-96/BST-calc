@@ -2,8 +2,6 @@ import sys
 
 
 def postfix(list):
-    operands = []
-    operator = []
     # 숫자와 연산자를 각각 구분을 한다
     for i in range(len(list)):
         operands = []

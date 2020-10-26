@@ -10,14 +10,19 @@
 6. Any error messages for incorrect
 
 - 주의점
-
 1. stack 사용 Postfix Caculator가 아닌 BST 형태로 구현
 2. 중간 과정 산출물들도 print되도록
 
 - 난이도 1 : BST-calc-1.py
-
 1. single-digit integers, binary operator : '+', '-', 'x', '/'
 2. operand와 operator 사이에 space가 있다.
 3. 연산자 우선 순위가 존재하지 않는다.
 4. 소수 부분은 소수 둘 째 자리에서 반올림 한다.
 5. Example : 2 + 4 x 5 / 4 = 7.5
+
+- 난이도 1.5 : BST-calc-2.py
+1. single-digit integers, binary operator : '+', '-', 'x', '/'
+2. operand와 operator 사이에 space가 있다.
+3. 연산자 우선 순위가 존재한다.
+4. 소수 부분은 소수 둘 째 자리에서 반올림 한다.
+5. 예외 처리 : 0으로 나누는 경우, 연산자를 제외한 문자가 입력된 경우, 올바른 식이 아닌 경우
